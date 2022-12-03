@@ -11,9 +11,9 @@ public class Day1 {
 
     static BufferedReader reader;
     public static int getMostCalories() {
-        String line;
         ArrayList<Integer> caloriesList = new ArrayList<>();
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/day1input.txt"))) {
+            String line;
             int total = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 if(line.isEmpty()) {
@@ -34,10 +34,10 @@ public class Day1 {
     }
 
     public static int getTotalOfTopThreeElves() {
-        String line;
         int first = 0, second = 0, third = 0;
-        int total = 0;
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/day1input.txt"))) {
+            String line;
+            int total = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 if(line.isEmpty()) {
                     if(total > first) {
