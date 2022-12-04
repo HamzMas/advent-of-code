@@ -34,9 +34,6 @@ public class Day2 {
             "Z", "Win"
     );
 
-
-    static BufferedReader reader;
-
     private static int checkResult(String opponent, String player) {
         int points = 0;
         String opponentInput = handValues.get(opponent);

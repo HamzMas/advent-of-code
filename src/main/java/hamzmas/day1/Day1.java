@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Day1 {
-
-    static BufferedReader reader;
     public static int getMostCalories() {
         ArrayList<Integer> caloriesList = new ArrayList<>();
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/day1input.txt"))) {
