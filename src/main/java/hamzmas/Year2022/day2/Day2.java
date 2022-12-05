@@ -5,145 +5,79 @@ import static hamzmas.Year2022.util.ReadFile.getLinesFromFile;
 
 public class Day2 {
 
-    static Map <String, Integer> handPoints = Map.of(
-            "Rock", 1,
-            "Paper", 2,
-            "Scissors", 3,
-            "Win", 6,
-            "Draw", 3
-    );
-
-    static Map<String, String> handValues = Map.of(
-            "A", "Rock",
-            "B", "Paper",
-            "C", "Scissors",
-            "X", "Rock",
-            "Y", "Paper",
-            "Z", "Scissors"
-    );
-
-    static Map<String, String> handValuesWithOutcome = Map.of(
-            "A", "Rock",
-            "B", "Paper",
-            "C", "Scissors",
-            "X", "Loss",
-            "Y", "Draw",
-            "Z", "Win"
-    );
-
     static List<String> lines = getLinesFromFile("src/main/resources/Year2022/day2input.txt");
 
     public static int getRockPaperScissorsScore() {
         int score = 0;
-        ArrayList<String> opponentInputs = new ArrayList<>();
-        ArrayList<String> playerInputs = new ArrayList<>();
         for(String line : lines) {
-            opponentInputs.add(line.substring(0,1));
-            playerInputs.add(line.substring(2,3));
-        }
-        for(int i = 0; i < opponentInputs.size(); i++) {
-            score += checkResult(opponentInputs.get(i),playerInputs.get(i));
+            Character opponentInput = line.substring(0,1).charAt(0);
+            Character playerInput = line.substring(2,3).charAt(0);
+            score += checkResult(opponentInput,playerInput);
         }
         return score;
     }
 
     public static int getRockPaperScissorsScoreWithOutcomeInput() {
         int score = 0;
-        ArrayList<String> opponentInputs = new ArrayList<>();
-        ArrayList<String> playerInputs = new ArrayList<>();
         for(String line : lines) {
-            opponentInputs.add(line.substring(0,1));
-            playerInputs.add(line.substring(2,3));
-        }
-        for(int i = 0; i < opponentInputs.size(); i++) {
-            score += checkResultToReachOutcome(opponentInputs.get(i),playerInputs.get(i));
+            Character opponentInput = line.substring(0,1).charAt(0);
+            Character gameOutcome = line.substring(2,3).charAt(0);
+            score += checkResultToReachOutcome(opponentInput,gameOutcome);
         }
         return score;
     }
 
-    private static int checkResult(String opponent, String player) {
+    private static int getHandScore(Character player) {
+        int totalScore = 0;
+        if (player == 'X'){
+            totalScore += 1;
+        }
+        else if (player == 'Y') {
+            totalScore += 2;
+        }
+        else if (player == 'Z') {
+            totalScore += 3;
+        }
+        return totalScore;
+    }
+
+    private static int checkResult(Character opponent, Character player) {
         int points = 0;
-        String opponentInput = handValues.get(opponent);
-        String playerInput = handValues.get(player);
+        int gameResult = player - opponent;
 
-        if(playerInput.equals("Rock")) {
-
-            if(opponentInput.equals("Scissors")) {
-                points += handPoints.get("Rock") + handPoints.get("Win");
-            }
-            else if(opponentInput.equals("Paper")) {
-                points += handPoints.get("Rock");
-            }
-            else if(opponentInput.equals("Rock")) {
-                points += handPoints.get("Rock") + handPoints.get("Draw");
-            }
+        if ((gameResult == 21 || opponent < player - 23) && gameResult != 25){
+            points += getHandScore(player) + 6 ;
         }
-
-        else if(playerInput.equals("Paper")) {
-            if(opponentInput.equals("Rock")) {
-                points += handPoints.get("Paper") + handPoints.get("Win");
-            }
-            else if(opponentInput.equals("Scissors")) {
-                points += handPoints.get("Paper");
-            }
-            else if(opponentInput.equals("Paper")) {
-                points += handPoints.get("Paper") + handPoints.get("Draw");
-            }
+        else if (gameResult == 25 || opponent > player - 23 ) {
+            points += getHandScore(player);
         }
-
-        else if(playerInput.equals("Scissors")) {
-            if(opponentInput.equals("Paper")) {
-                points += handPoints.get("Scissors") + handPoints.get("Win");;
-            }
-            else if(opponentInput.equals("Rock")) {
-                points += handPoints.get("Scissors");
-            }
-            else if(opponentInput.equals("Scissors")) {
-                points += handPoints.get("Scissors") + handPoints.get("Draw");
-            }
+        else if (gameResult == 23){
+            points += getHandScore(player) + 3;
         }
-
         return points;
     }
 
-    private static int checkResultToReachOutcome(String opponent, String result) {
+    private static int checkResultToReachOutcome(Character opponent, Character outcome) {
         int points = 0;
-        String opponentInput = handValuesWithOutcome.get(opponent);
-        String gameResult = handValuesWithOutcome.get(result);
-        if(opponentInput.equals("Rock")) {
 
-            if(gameResult.equals("Loss")) {
-                points += handPoints.get("Scissors");
+        if (outcome == 'X') {
+            if (opponent - 66 < 0) {
+                points += 3;
             }
-            else if(gameResult.equals("Draw")) {
-                points += handPoints.get("Rock") + handPoints.get("Draw");
-            }
-            else if(gameResult.equals("Win")) {
-                points += handPoints.get("Paper") + handPoints.get("Win");
+            else {
+                points += opponent - 65;
             }
         }
-
-        else if(opponentInput.equals("Paper")) {
-            if(gameResult.equals("Loss")) {
-                points += handPoints.get("Rock");
-            }
-            else if(gameResult.equals("Draw")) {
-                points += handPoints.get("Paper") + handPoints.get("Draw");
-            }
-            else if(gameResult.equals("Win")) {
-                points += handPoints.get("Scissors") + handPoints.get("Win");
-            }
+        else if(outcome == 'Y') {
+            points += opponent - 64 + 3;
         }
-
-        else if(opponentInput.equals("Scissors")) {
-            if(gameResult.equals("Loss")) {
-                points += handPoints.get("Paper");
+        else if (outcome == 'Z') {
+            points += 6;
+            if(opponent - 64 > 2) {
+                points += 1;
             }
-            else if(gameResult.equals("Draw")) {
-                points += handPoints.get("Scissors") + handPoints.get("Draw");
-            }
-            else if(gameResult.equals("Win")) {
-                points += handPoints.get("Rock") + handPoints.get("Win");
+            else {
+                points += opponent - 63;
             }
         }
 
