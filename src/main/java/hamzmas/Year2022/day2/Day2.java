@@ -1,4 +1,4 @@
-package hamzmas.day2;
+package hamzmas.Year2022.day2;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -126,7 +126,7 @@ public class Day2 {
 
     public static int getRockPaperScissorsScore() {
         int score = 0;
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/day2input.txt"))) {
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/Year2022/day2input.txt"))) {
             String line;
             ArrayList<String> opponentInputs = new ArrayList<>();
             ArrayList<String> playerInputs = new ArrayList<>();
@@ -149,7 +149,7 @@ public class Day2 {
 
     public static int getRockPaperScissorsScoreWithOutcomeInput() {
         int score = 0;
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/day2input.txt"))) {
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/Year2022/day2input.txt"))) {
             String line;
             ArrayList<String> opponentInputs = new ArrayList<>();
             ArrayList<String> playerInputs = new ArrayList<>();

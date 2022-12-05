@@ -1,4 +1,4 @@
-package hamzmas.day1;
+package hamzmas.Year2022.day1;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ import java.util.Collections;
 public class Day1 {
     public static int getMostCalories() {
         ArrayList<Integer> caloriesList = new ArrayList<>();
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/day1input.txt"))) {
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/Year2022/day1input.txt"))) {
             String line;
             int total = 0;
             while ((line = bufferedReader.readLine()) != null) {
@@ -33,7 +33,7 @@ public class Day1 {
 
     public static int getTotalOfTopThreeElves() {
         int first = 0, second = 0, third = 0;
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/day1input.txt"))) {
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/Year2022/day1input.txt"))) {
             String line;
             int total = 0;
             while ((line = bufferedReader.readLine()) != null) {
