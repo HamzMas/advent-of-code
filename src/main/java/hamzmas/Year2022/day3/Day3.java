@@ -1,48 +1,30 @@
 package hamzmas.Year2022.day3;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.List;
+import static hamzmas.Year2022.util.ReadFile.getLinesFromFile;
 
 public class Day3 {
 
-
+    static List<String> lines = getLinesFromFile("src/main/resources/Year2022/day3input.txt");
     public static int getSumOfRucksack() {
         int sum = 0;
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/Year2022/day3input.txt"))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String firstHalf = line.substring(0, line.length()/2);
-                String secondHalf = line.substring(line.length()/2);
-                Character common = findCommonLetter(firstHalf, secondHalf);
-                sum += getLetterValue(common);
-            }
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        for(String line : lines) {
+            String firstHalf = line.substring(0, line.length() / 2);
+            String secondHalf = line.substring(line.length() / 2);
+            Character common = findCommonLetter(firstHalf, secondHalf);
+            sum += getLetterValue(common);
         }
         return sum;
     }
 
     public static int getSumOfRucksacksPer3() {
         int sum = 0;
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/Year2022/day3input.txt"))) {
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                String firstLine = line;
-                String secondLine = bufferedReader.readLine();
-                String thirdLine = bufferedReader.readLine();
-                Character common = findCommonLetter(firstLine, secondLine, thirdLine);
-                sum += getLetterValue(common);
-            }
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        for(int i = 0; i < lines.size(); i+=3) {
+            String firstLine = lines.get(i);
+            String secondLine = lines.get(i+1);
+            String thirdLine = lines.get(i+2);
+            Character common = findCommonLetter(firstLine, secondLine, thirdLine);
+            sum += getLetterValue(common);
         }
         return sum;
     }

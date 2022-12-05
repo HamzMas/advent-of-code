@@ -1,10 +1,7 @@
 package hamzmas.Year2022.day2;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.*;
+import static hamzmas.Year2022.util.ReadFile.getLinesFromFile;
 
 public class Day2 {
 
@@ -34,6 +31,36 @@ public class Day2 {
             "Z", "Win"
     );
 
+    static List<String> lines = getLinesFromFile("src/main/resources/Year2022/day2input.txt");
+
+    public static int getRockPaperScissorsScore() {
+        int score = 0;
+        ArrayList<String> opponentInputs = new ArrayList<>();
+        ArrayList<String> playerInputs = new ArrayList<>();
+        for(String line : lines) {
+            opponentInputs.add(line.substring(0,1));
+            playerInputs.add(line.substring(2,3));
+        }
+        for(int i = 0; i < opponentInputs.size(); i++) {
+            score += checkResult(opponentInputs.get(i),playerInputs.get(i));
+        }
+        return score;
+    }
+
+    public static int getRockPaperScissorsScoreWithOutcomeInput() {
+        int score = 0;
+        ArrayList<String> opponentInputs = new ArrayList<>();
+        ArrayList<String> playerInputs = new ArrayList<>();
+        for(String line : lines) {
+            opponentInputs.add(line.substring(0,1));
+            playerInputs.add(line.substring(2,3));
+        }
+        for(int i = 0; i < opponentInputs.size(); i++) {
+            score += checkResultToReachOutcome(opponentInputs.get(i),playerInputs.get(i));
+        }
+        return score;
+    }
+
     private static int checkResult(String opponent, String player) {
         int points = 0;
         String opponentInput = handValues.get(opponent);
@@ -53,7 +80,7 @@ public class Day2 {
         }
 
         else if(playerInput.equals("Paper")) {
-             if(opponentInput.equals("Rock")) {
+            if(opponentInput.equals("Rock")) {
                 points += handPoints.get("Paper") + handPoints.get("Win");
             }
             else if(opponentInput.equals("Scissors")) {
@@ -121,51 +148,5 @@ public class Day2 {
         }
 
         return points;
-    }
-
-
-    public static int getRockPaperScissorsScore() {
-        int score = 0;
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/Year2022/day2input.txt"))) {
-            String line;
-            ArrayList<String> opponentInputs = new ArrayList<>();
-            ArrayList<String> playerInputs = new ArrayList<>();
-            while ((line = bufferedReader.readLine()) != null) {
-                opponentInputs.add(line.substring(0,1));
-                playerInputs.add(line.substring(2,3));
-            }
-            for(int i = 0; i < opponentInputs.size(); i++) {
-                score += checkResult(opponentInputs.get(i),playerInputs.get(i));
-            }
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return score;
-    }
-
-
-    public static int getRockPaperScissorsScoreWithOutcomeInput() {
-        int score = 0;
-        try(BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/resources/Year2022/day2input.txt"))) {
-            String line;
-            ArrayList<String> opponentInputs = new ArrayList<>();
-            ArrayList<String> playerInputs = new ArrayList<>();
-            while ((line = bufferedReader.readLine()) != null) {
-                opponentInputs.add(line.substring(0,1));
-                playerInputs.add(line.substring(2,3));
-            }
-            for(int i = 0; i < opponentInputs.size(); i++) {
-                score += checkResultToReachOutcome(opponentInputs.get(i),playerInputs.get(i));
-            }
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return score;
     }
 }
